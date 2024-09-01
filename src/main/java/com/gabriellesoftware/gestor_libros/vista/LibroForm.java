@@ -10,6 +10,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Toolkit; 
 import javax.swing.*; //Incluye JFrame y más.
+import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,18 +48,28 @@ public class LibroForm extends javax.swing.JFrame {
     
     
     private void iniciarForma(){
-        initComponents();
-        setContentPanel(panel);
+        initComponents(); //Inicializa todos los componentes generados por el editor.
+        setContentPane(panel); //Establece el panel principal como contenido del JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrado de app.
         setVisible(true); //Visualización del formulario cuando se ejecute.
-        setSize(900, 700);
+        setSize(900, 700); //Establece el tamaño de la ventana.
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension tamanioPantalla = toolkit.getScreenSize();
-        int x = (tamanioPantalla.width - getWidth() /2);
-        int y = (tamanioPantalla.height = getHeight() /2);
+        int x = (tamanioPantalla.width - getWidth()) /2;
+        int y = (tamanioPantalla.height = getHeight()) /2;
         setLocation(x,y);
         
     }
+    
+    private void createUIComponents(){
+        //Registros de la tabla.
+        this.tablaModeloLibros = new DefaultTableModel(0, 5);
+        String[] cabeceros = {"Id", "Libro", "Autor", "Precio", "Existencias"};
+        this.tablaModeloLibros.setColumnIdentifiers(cabeceros);
+        //Instanciar el objeto Jtable.
+        this.tablaLibros = new JTable(tablaModeloLibros);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,9 +81,12 @@ public class LibroForm extends javax.swing.JFrame {
 
         panel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jFrame1 = new javax.swing.JFrame();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaLibros = new javax.swing.JTable();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panel.setBackground(new java.awt.Color(0, 0, 0));
         panel.setName(""); // NOI18N
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 255));
@@ -81,58 +95,59 @@ public class LibroForm extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Gestor de Libros");
 
+        tablaLibros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaLibros.setName(""); // NOI18N
+        jScrollPane1.setViewportView(tablaLibros);
+        tablaLibros.getAccessibleContext().setAccessibleName("");
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 254, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(400, Short.MAX_VALUE))
         );
-
-        panel.getAccessibleContext().setAccessibleName("");
-        panel.getAccessibleContext().setAccessibleDescription("");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 433, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 367, Short.MAX_VALUE)
-        );
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 433, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 367, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        panel.getAccessibleContext().setAccessibleName("");
+        panel.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -158,20 +173,11 @@ public class LibroForm extends javax.swing.JFrame {
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel;
+    private javax.swing.JTable tablaLibros;
     // End of variables declaration//GEN-END:variables
     //En Design: Form > JPanel > Code > Vairable name | Value - [modificado]
-
-    
-    private void setContentPanel(JPanel panel) {
-        
-        getContentPane().removeAll(); // Elimina cualquier componente previo del content pane
-        getContentPane().add(panel);   // Agrega el nuevo panel al content pane
-        revalidate(); // Vuelve a validar el layout
-        repaint();    // Redibuja la ventana
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    private DefaultTableModel tablaModeloLibros; //Se agrega tras añadir tablaLibros y el método createUIComponent() 
 }
